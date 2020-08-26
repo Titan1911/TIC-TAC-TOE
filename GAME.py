@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import pyttsx3
+import time
 
 engine = pyttsx3.init()
 voices = engine.getProperty("voices")
@@ -24,21 +25,28 @@ def hear_name():
 
         r.adjust_for_ambient_noise(source)
 
-        print('Speak up the name of player 1: ')
+        print('Player 1 name: ')
         speak('Speak up the name of player 1: ')
         print('Listening....')
         audio = r.listen(source)
         print("Processing....")
         player_one = r.recognize_google(audio)
-        print(player_one)
+        print(f'Player 1: {player_one}')
+        speak(f'Player 1 name is: {player_one}')
+        time.sleep(1)
 
-        print('Speak up the name of player 2: ')
+        print('\n')
+
+        print('Player 2 name: ')
         speak('Speak up the name of player 2: ')
         print('Listening....')
         audio = r.listen(source)
         print('Processing....')
         player_two = r.recognize_google(audio)
-        print(player_two)
+        print(f'Player 2: {player_two}')
+        speak(f'Player two name is: {player_two}')
+        time.sleep(1)
+        print('\n')
 
     return (player_one,player_two)
 
@@ -67,14 +75,21 @@ def voice_recog(player_one,player_two):
         r = sr.Recognizer()
         r.adjust_for_ambient_noise(source)
 
-        print('Speak up the slot which you want to fill: ')
-        speak('Speak up the slot which you want to fill: ')
+        if turn <= 1:
+            speak('Speak up the slot which you want to fill: ')
         print('Listening....')
         audio = r.listen(source)
+        print("Processing....")
+        print('\n')
 
         try:
-            print("Processing....")
             option = r.recognize_google(audio)
+            if option == 'sex':
+                option = '6'
+
+            if option == 'Tu':
+                option = '2'
+
             option = int(option)
 
         except:
@@ -85,9 +100,12 @@ def voice_recog(player_one,player_two):
         if slot[option-1] == ' ' :
             if chance == player_one :
                 slot[option-1] = 'O'
+                speak(f'Filling the slot {option} with a zero')
 
             else :
                 slot[option-1] = 'X'
+                speak(f'Filling the slot {option} with a cross')
+
 
         else :
             print("This slot is already filled, choose a different one")
@@ -95,14 +113,16 @@ def voice_recog(player_one,player_two):
             voice_recog(player_one,player_two)
 
     else :
-        print("This is an invalid slot, please enter a slot between 1 to 9")
-        speak("This is an invalid slot, please enter a slot between 1 to 9")
+        print("This is an invalid slot, please choose a slot between 1 to 9")
+        speak("This is an invalid slot, please choose a slot between 1 to 9")
         voice_recog(player_one,player_two)
 
 
 def win_situation():
     print(f'{chance} is the winner!')
     speak(f'{chance} is the winner!')
+    print('THANK YOU FOR PLAYING')
+    speak('THANK YOU FOR PLAYING')
     exit()
 
 
@@ -130,6 +150,11 @@ def win_condition():
 
 
 if __name__ == '__main__':
+    print("--------------------WELCOME TO THE GAME OF TIC-TAC-TOE--------------------")
+    speak('Welcome to game of tic tac toe')
+    print("   --------------------------Created by TITAN--------------------------   ")
+    speak('created by TITAN')
+    print('\n')
     player_one, player_two = hear_name()
     while True:
 
@@ -143,7 +168,9 @@ if __name__ == '__main__':
         print('\n')
         main_board()
 
-        print(f"{chance}'s turn")
+        print('\n')
+
+        print(f"{chance}'s turn : ")
         speak(f"{chance}'s turn")
 
         voice_recog(player_one,player_two)
