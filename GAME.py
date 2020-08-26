@@ -96,7 +96,7 @@ def voice_recog(player_one,player_two):
             print("", end='')
 
 
-    if option in range(1,10) :
+    if option in range(1, 10):
         if slot[option-1] == ' ' :
             if chance == player_one :
                 slot[option-1] = 'O'
@@ -119,8 +119,10 @@ def voice_recog(player_one,player_two):
 
 
 def win_situation():
+    print('\n')
     print(f'{chance} is the winner!')
     speak(f'{chance} is the winner!')
+    print('\n')
     print('THANK YOU FOR PLAYING')
     speak('THANK YOU FOR PLAYING')
     exit()
