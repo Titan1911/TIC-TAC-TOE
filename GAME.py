@@ -184,5 +184,8 @@ if __name__ == '__main__':
         if turn == 9:
             print("The Game is drawn!")
             speak("The Game is drawn!")
+            print('\n')
+            print('THANK YOU FOR PLAYING')
+            speak('THANK YOU FOR PLAYING')
             main_board()
             exit()
